@@ -1,12 +1,49 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div>
+      <h1>My personal costs</h1>
     </div>
-    <router-view />
+
+    <div>
+      <button class="btnCost" @click="show = !show">ADD NEW COST +</button>
+      <AddPayForm @addNewPay="addNewData" v-if="show" />
+      <PayDisplay :items="payList" />
+    </div>
   </div>
 </template>
+<script>
+import PayDisplay from "./components/PayDisplay.vue";
+import AddPayForm from "./components/AddPayForm.vue";
+export default {
+  name: "App",
+  components: {
+    PayDisplay,
+    AddPayForm,
+  },
+  data() {
+    return {
+      show: false,
+      payList: [],
+    };
+  },
+  methods: {
+    addNewData(value) {
+      this.payList = [...this.payList, value];
+    },
+    fetchData() {
+      return [
+        { date: "12.02.2020", category: "Food", value: 5500 },
+        { date: "12.02.2019", category: "sport", value: 4432 },
+        { date: "12.02.2019", category: "Car", value: 444332 },
+        { date: "12.02.2021", category: "House", value: 3423 },
+      ];
+    },
+  },
+  created() {
+    this.payList = this.fetchData();
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
