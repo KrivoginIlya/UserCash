@@ -1,19 +1,24 @@
 <template>
-  <div class="payForm">
+  <div class="payment-form">
     <input placeholder="Date" type="text" v-model.trim="date" />
-    <input placeholder="Category" v-model.trim="category" />
-    <input placeholder="Cash" type="number" v-model.number="value" />
-    <button @click="onClick()">Save</button>
+    <select v-model="category">
+      <option v-for="(item, idx) in categoryList" :value="item" :key="idx">
+        {{ item }}
+      </option>
+    </select>
+    <input placeholder="Amout" type="number" v-model.number="value" />
+    <button @click="onClick">Save</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AddPayForm",
+  name: "AddPaymentForm",
+  props: ["categoryList"],
   data() {
     return {
       date: "",
-      category: "",
+      category: "Food",
       value: 0,
     };
   },
@@ -26,13 +31,13 @@ export default {
       return `${d}.${m}.${y}`;
     },
     onClick() {
-      const { value, category } = this;
+      const { category, value } = this;
       const data = {
-        value,
-        category,
         date: this.date || this.getCurrentDate(),
+        category,
+        value,
       };
-      this.$emit("addNewPay", data);
+      this.$emit("addNewPayment", data);
     },
   },
 };

@@ -1,69 +1,93 @@
 <template>
   <div id="app">
     <div>
-      <h1>My personal costs</h1>
+      <h1>My Personal Cost</h1>
     </div>
-
-    <div>
+    <div class="wrapper">
       <button class="btnCost" @click="show = !show">ADD NEW COST +</button>
-      <AddPayForm @addNewPay="addNewData" v-if="show" />
-      <PayDisplay :items="payList" />
+      <AddPaymentForm
+        @addNewPayment="addNewPaymentData"
+        :category-list="categoryList"
+        v-if="show"
+      />
+      <br />
+
+      <PaymentsDisplay :items="curElements" />
+      <Pagination
+        :length="paymentListLength"
+        @changePage="onPage"
+        :count="count"
+        :cur="page"
+      />
+      <div>Total Coast = {{ getFullValue }}</div>
     </div>
   </div>
 </template>
+
 <script>
-import PayDisplay from "./components/PayDisplay.vue";
-import AddPayForm from "./components/AddPayForm.vue";
+import { mapMutations, mapGetters, mapActions } from "vuex";
+import PaymentsDisplay from "./components/PaymentsDisplay.vue";
+import AddPaymentForm from "./components/AddPaymentForm.vue";
+import Pagination from "./components/Pagination.vue";
 export default {
   name: "App",
-  components: {
-    PayDisplay,
-    AddPayForm,
-  },
   data() {
     return {
       show: false,
-      payList: [],
+      page: 1,
+      count: 10,
     };
   },
+  components: {
+    Pagination,
+    PaymentsDisplay,
+    AddPaymentForm,
+  },
   methods: {
-    addNewData(value) {
-      this.payList = [...this.payList, value];
+    ...mapMutations(["setPaymentsListData", "addDataToPaymentList"]),
+    ...mapActions({
+      fetchListData: "fetchData",
+    }),
+    addNewPaymentData(value) {
+      this.addDataToPaymentList(value);
     },
-    fetchData() {
-      return [
-        { date: "12.02.2020", category: "Food", value: 5500 },
-        { date: "12.02.2019", category: "sport", value: 4432 },
-        { date: "12.02.2019", category: "Car", value: 444332 },
-        { date: "12.02.2021", category: "House", value: 3423 },
-      ];
+    onPage(p) {
+      this.page = p;
+    },
+  },
+  computed: {
+    ...mapGetters(["getFullPaymentValue"]),
+    getFullValue() {
+      return this.getFullPaymentValue;
+    },
+    paymentList() {
+      return this.$store.getters.getPaymentList;
+    },
+    paymentListLength() {
+      return this.$store.getters.getPaymentList.length;
+    },
+    categoryList() {
+      return this.$store.getters.getCategoryList;
+    },
+    curElements() {
+      const { count, page } = this;
+      return this.paymentList.slice(
+        count * (page - 1),
+        count * (page - 1) + count
+      );
     },
   },
   created() {
-    this.payList = this.fetchData();
+    if (!this.fetchListData.length) {
+      this.fetchListData();
+    }
+    this.$store.dispatch("fetchCategoryList");
   },
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+<style lang="scss" scoped module>
+.header {
+  font-size: 20px;
 }
 </style>

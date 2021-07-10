@@ -1,10 +1,9 @@
 <template>
-  <div class="list">
+  <div class="payments-list">
     <div class="item" v-for="(item, idx) in items" :key="idx">
-      <!-- {{ idx + 1 }}-{{ item }} -->
       <table>
         <thead>
-          <td>#</td>
+          <td>{{ item.id }}</td>
           <td>{{ item.date }}</td>
           <td>{{ item.category }}</td>
           <td>{{ item.value }}</td>
@@ -16,7 +15,7 @@
 
 <script>
 export default {
-  name: "PayDisplay",
+  name: "PaymentsDisplay",
   props: {
     items: {
       type: Array,
@@ -27,7 +26,7 @@ export default {
 </script>
 <style>
 td {
-  padding-right: 25px;
-  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-bottom: 15px;
 }
 </style>
