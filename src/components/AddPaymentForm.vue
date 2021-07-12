@@ -8,6 +8,9 @@
     </select>
     <input placeholder="Amout" type="number" v-model.number="value" />
     <button @click="onClick">Save</button>
+    <button @click="value = 200">200</button>
+    <button @click="value = 50">50</button>
+    <button @click="onClick1">2200</button>
   </div>
 </template>
 

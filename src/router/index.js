@@ -1,14 +1,34 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import PageDashboard from "../views/PageDashboard";
+import PageAbout from "../views/PageAbout";
+import Page404 from "../views/Page404";
 
 Vue.use(VueRouter);
 
-const routes = [];
-
-const router = new VueRouter({
+export default new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes: [
+    // {
+    //   path: "/",
+    //   name: "PageDashboard",
+    //   component: PageDashboard,
+    // },
+    {
+      path: "/PageDashboard",
+      name: "PageDashboard",
+      component: PageDashboard,
+    },
+    {
+      path: "/PageAbout",
+      name: "PageAbout",
+      component: PageAbout,
+    },
+    {
+      path: "*",
+      name: "Page404",
+      component: Page404,
+    },
+  ],
 });
-
-export default router;

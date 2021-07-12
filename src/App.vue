@@ -3,15 +3,24 @@
     <div>
       <h1>My Personal Cost</h1>
     </div>
+    <div class="menu">
+      <a href="#" @click="goToPage('PageDashboard')">PageDashboard</a>
+      /
+      <a href="#" @click="goToPage('PageAbout')">PageAbout</a>
+    </div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
     <div class="wrapper">
       <button class="btnCost" @click="show = !show">ADD NEW COST +</button>
+
       <AddPaymentForm
         @addNewPayment="addNewPaymentData"
         :category-list="categoryList"
         v-if="show"
       />
       <br />
-
+      <AddPay />
       <PaymentsDisplay :items="curElements" />
       <Pagination
         :length="paymentListLength"
@@ -29,6 +38,8 @@ import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
 import AddPaymentForm from "./components/AddPaymentForm.vue";
 import Pagination from "./components/Pagination.vue";
+// import AddPay from "./components/AddPay.vue";
+
 export default {
   name: "App",
   data() {
@@ -39,6 +50,7 @@ export default {
     };
   },
   components: {
+    // AddPay,
     Pagination,
     PaymentsDisplay,
     AddPaymentForm,
@@ -53,6 +65,11 @@ export default {
     },
     onPage(p) {
       this.page = p;
+    },
+    goToPage(page) {
+      this.$router.push({
+        name: page,
+      });
     },
   },
   computed: {
