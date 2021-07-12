@@ -20,7 +20,6 @@
         v-if="show"
       />
       <br />
-      <AddPay />
       <PaymentsDisplay :items="curElements" />
       <Pagination
         :length="paymentListLength"

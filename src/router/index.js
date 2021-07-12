@@ -10,11 +10,16 @@ export default new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
-    // {
-    //   path: "/",
-    //   name: "PageDashboard",
-    //   component: PageDashboard,
-    // },
+    {
+      path: "/",
+      name: "PageDashboard",
+      component: PageDashboard,
+    },
+    {
+      path: "/",
+      name: "PageDashboard",
+      component: PageDashboard,
+    },
     {
       path: "/PageDashboard",
       name: "PageDashboard",

@@ -8,15 +8,18 @@
     </select>
     <input placeholder="Amout" type="number" v-model.number="value" />
     <button @click="onClick">Save</button>
-    <button @click="value = 200">200</button>
-    <button @click="value = 50">50</button>
-    <button @click="onClick1">2200</button>
+    <br />
+    <AddPayStok @AddNewStokPay="AddToStokPay" />
   </div>
 </template>
 
 <script>
+import AddPayStok from "./AddPayStok.vue";
 export default {
   name: "AddPaymentForm",
+  components: {
+    AddPayStok,
+  },
   props: ["categoryList"],
   data() {
     return {
@@ -26,6 +29,11 @@ export default {
     };
   },
   methods: {
+    AddToStokPay(value) {
+      this.category = value.category;
+      this.value = value.value;
+      this.date = this.getCurrentDate();
+    },
     getCurrentDate() {
       const today = new Date();
       const d = today.getDate();
