@@ -11,27 +11,27 @@ export default new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "PageDashboard",
-      component: PageDashboard,
-    },
-    {
-      path: "/",
-      name: "PageDashboard",
-      component: PageDashboard,
-    },
-    {
       path: "/PageDashboard",
       name: "PageDashboard",
       component: PageDashboard,
     },
+    // {
+    //   path: "/",
+    //   name: "PageDashboard",
+    //   component: PageDashboard,
+    // },
+    // {
+    //   path: "/PageDashboard",
+    //   name: "PageDashboard",
+    //   component: PageDashboard,
+    // },
     {
       path: "/PageAbout",
       name: "PageAbout",
       component: PageAbout,
     },
     {
-      path: "*",
+      path: "/404",
       name: "Page404",
       component: Page404,
     },

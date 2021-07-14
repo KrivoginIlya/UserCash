@@ -4,11 +4,17 @@
       <h1>My Personal Cost</h1>
     </div>
     <div class="menu">
-      <a href="#" @click="goToPage('PageDashboard')">PageDashboard</a>
+      <a href="#PageAbout">PageAbout</a> /
+      <a href="#PageDashboard">PageDashboard</a>/
+      <a href="#Page404">Page404</a>
+      <!-- <a href="#" @click="goToPage('PageDashboard')">PageDashboard</a>
       /
-      <a href="#" @click="goToPage('PageAbout')">PageAbout</a>
+      <a href="#" @click="goToPage('PageAbout')">PageAbout</a> -->
     </div>
     <div class="content">
+      <PageDashboard v-if="pageName === 'PageDashboard'" />
+      <PageAbout v-if="pageName === 'PageAbout'" />
+      <Page404 v-if="pageName === 'Page404'" />
       <router-view></router-view>
     </div>
     <div class="wrapper">
@@ -37,8 +43,10 @@ import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
 import AddPaymentForm from "./components/AddPaymentForm.vue";
 import Pagination from "./components/Pagination.vue";
+import PageDashboard from "./views/PageDashboard.vue";
+import PageAbout from "./views/PageAbout.vue";
+import Page404 from "./views/Page404.vue";
 // import AddPay from "./components/AddPay.vue";
-
 export default {
   name: "App",
   data() {
@@ -46,6 +54,7 @@ export default {
       show: false,
       page: 1,
       count: 10,
+      pageName: "",
     };
   },
   components: {
@@ -53,6 +62,9 @@ export default {
     Pagination,
     PaymentsDisplay,
     AddPaymentForm,
+    PageDashboard,
+    PageAbout,
+    Page404,
   },
   methods: {
     ...mapMutations(["setPaymentsListData", "addDataToPaymentList"]),
@@ -64,6 +76,9 @@ export default {
     },
     onPage(p) {
       this.page = p;
+    },
+    setPage() {
+      this.pageName = location.hash.slice(1);
     },
     goToPage(page) {
       this.$router.push({
@@ -98,6 +113,13 @@ export default {
       this.fetchListData();
     }
     this.$store.dispatch("fetchCategoryList");
+  },
+  mounted() {
+    this.setPage();
+    window.addEventListener("hashchange", () => {
+      console.log("hashchange");
+      this.setPage();
+    });
   },
 };
 </script>
