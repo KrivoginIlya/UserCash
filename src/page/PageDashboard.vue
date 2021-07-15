@@ -1,68 +1,75 @@
 <template>
   <div>
-    <div class="wrapper">
-      <button @click="onshow">ADD NEW COST +</button>
-    </div>
-
     <AddPaymentForm
-      @addNewPayment="addNewPaymentData"
+      @addNewPayment="addNewPaymentData(value)"
       :category-list="categoryList"
       v-if="show"
     />
-    <br />
-
-    <div>Total Coast = {{ getFullValue }}</div>
 
     <PaymentsDisplay :items="curElements" />
     <Pagination
       :length="paymentListLength"
-      @changePage="onPage"
+      @changePage="onPaginate"
       :count="count"
       :cur="page"
     />
+    <button @click="showPaymentsForm">ADD NEW COST +</button>
+    <br />
+    <div>Total Sum = {{ getFPV }}</div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import AddPaymentForm from "../components/AddPaymentForm.vue";
 import Pagination from "../components/Pagination.vue";
+import AddPaymentForm from "../components/AddPaymentForm.vue";
 
 export default {
   name: "PageDashboard",
   components: {
-    Pagination,
-    PaymentsDisplay,
     AddPaymentForm,
+    PaymentsDisplay,
+    Pagination,
   },
   data() {
     return {
-      show: true,
       page: 1,
       count: 10,
       pageName: "",
     };
   },
-
   methods: {
     ...mapMutations(["setPaymentsListData", "addDataToPaymentList"]),
     ...mapActions({
       fetchListData: "fetchData",
     }),
     addNewPaymentData(value) {
+      console.log(value);
       this.addDataToPaymentList(value);
     },
-    onshow() {
-      this.show = !this.show;
-    },
-    onPage(p) {
+    onPaginate(p) {
       this.page = p;
+    },
+    goToPage(page) {
+      this.$router.push({
+        name: page,
+        params: {
+          id: "123",
+        },
+      });
+    },
+    showPaymentsForm() {
+      this.$modal.show("add", {
+        header: "Add My Cost",
+        compName: "AddPaymentForm",
+        category: this.categoryList,
+      });
     },
   },
   computed: {
     ...mapGetters(["getFullPaymentValue"]),
-    getFullValue() {
+    getFPV() {
       return this.getFullPaymentValue;
     },
     paymentList() {
@@ -89,8 +96,8 @@ export default {
     this.$store.dispatch("fetchCategoryList");
   },
   mounted() {
-    // console.log(this.$route);
     this.page = Number(this.$route.params.page) || 1;
+    console.log(this.$route);
   },
 };
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <div><p>404 danger</p></div>
+  <div>Add value</div>
 </template>
 
 <script>
 export default {
-  name: "Page404",
+  name: "AddStok",
 };
 </script>
 

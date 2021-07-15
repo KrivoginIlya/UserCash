@@ -48,6 +48,7 @@ export default {
         category,
         value,
       };
+      console.log(data);
       this.$emit("addNewPayment", data);
     },
   },

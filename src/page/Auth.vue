@@ -1,7 +1,7 @@
 <template>
   <div class="auth">
     AUTH
-    {{ propArray }}
+    <p>dzfbxdf gddf gdfgzdfg arr gddrg dd</p>
   </div>
 </template>
 
