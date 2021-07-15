@@ -23,28 +23,25 @@ export default {
     value200() {
       const data = {
         date: "",
-        category: this.$route.params.categoryF,
-        value: this.$route.params.valueF,
+        category: this.$route.query.categoryF,
+        value: this.$route.query.valueF,
       };
-      console.log(data);
       this.$emit("AddNewStokPay", data);
     },
     value50() {
       const data = {
         date: "",
-        category: this.$route.params.categoryT,
-        value: this.$route.params.valueT,
+        category: this.$route.query.categoryT,
+        value: this.$route.query.valueT,
       };
-      console.log(data);
       this.$emit("AddNewStokPay", data);
     },
     value2000() {
       const data = {
         date: "",
-        category: this.$route.params.categoryE,
-        value: this.$route.params.valueE,
+        category: this.$route.query.categoryE,
+        value: this.$route.query.valueE,
       };
-      console.log(data);
       this.$emit("AddNewStokPay", data);
     },
   },

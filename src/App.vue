@@ -28,14 +28,6 @@ export default {
     onShow(page) {
       this.$router.push({
         name: page,
-        // meta: {
-        //   categoryF: "Food",
-        //   categoryT: "Transport",
-        //   categoryE: "Education",
-        //   valueF: 200,
-        //   valueT: 50,
-        //   valueE: 2000,
-        // },
       });
     },
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wrapper">
-      <button @click="onshow">ADD NEW COST +</button>
+      <button @click="onParams()">ADD NEW COST +</button>
     </div>
 
     <AddPaymentForm
@@ -53,8 +53,19 @@ export default {
     addNewPaymentData(value) {
       this.addDataToPaymentList(value);
     },
-    onshow() {
+    onParams() {
       this.show = !this.show;
+      this.$router.push({
+        name: "PageDashboard",
+        query: {
+          categoryF: "Food",
+          categoryT: "Transport",
+          categoryE: "Education",
+          valueF: 200,
+          valueT: 50,
+          valueE: 2000,
+        },
+      });
     },
     onPage(p) {
       this.page = p;
