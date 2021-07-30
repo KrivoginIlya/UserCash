@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     paymentsList: [],
     category: [],
+    editId: 0,
   },
   mutations: {
     setPaymentsListData(state, payload) {
@@ -47,7 +48,7 @@ export default new Vuex.Store({
             "Education",
             "Internet",
           ]);
-        }, 1000);
+        }, 500);
       }).then((res) => commit("addCategory", res));
     },
     fetchData({ dispatch }) {
@@ -66,8 +67,20 @@ export default new Vuex.Store({
             });
           }
           resolve(items);
-        }, 2000);
+        }, 1000);
       }).then((res) => dispatch("someAction", res));
+    },
+    deletePayItem({ commit, state }, id) {
+      const newList = state.paymentsList.filter((item) => item.id !== id);
+      commit("setPaymentsListData", newList);
+    },
+    editPayItem({ commit, state }, data) {
+      const newList = state.paymentsList.filter((item) => item.id !== data.id);
+      newList.push(data);
+      newList.sort((a, b) => a.id - b.id);
+      console.log(" ", newList);
+
+      commit("setPaymentsListData", newList);
     },
   },
 });

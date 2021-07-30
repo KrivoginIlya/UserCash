@@ -3,8 +3,6 @@
     <button @click="value200">Food 200$</button>
     <button @click="value50">Transport 50$</button>
     <button @click="value2000">Education 2000$</button>
-
-    <AddStok />
   </div>
 </template>
 

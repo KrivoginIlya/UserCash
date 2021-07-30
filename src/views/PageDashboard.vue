@@ -1,14 +1,7 @@
 <template>
   <div>
-    <div class="wrapper">
-      <button @click="onParams()">ADD NEW COST +</button>
-    </div>
+    <div class="wrapper"></div>
 
-    <AddPaymentForm
-      @addNewPayment="addNewPaymentData"
-      :category-list="categoryList"
-      v-if="show"
-    />
     <br />
 
     <div>Total Coast = {{ getFullValue }}</div>
@@ -25,47 +18,32 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import AddPaymentForm from "../components/AddPaymentForm.vue";
-import Pagination from "../components/Pagination.vue";
-
 export default {
   name: "PageDashboard",
   components: {
-    Pagination,
-    PaymentsDisplay,
-    AddPaymentForm,
+    Pagination: () => import("../components/Pagination.vue"),
+    PaymentsDisplay: () => import("../components/PaymentsDisplay.vue"),
   },
   data() {
     return {
-      show: true,
       page: 1,
       count: 10,
       pageName: "",
+      redactorName: false,
     };
   },
 
   methods: {
-    ...mapMutations(["setPaymentsListData", "addDataToPaymentList"]),
+    ...mapMutations(["setPaymentsListData", "addDataToPaymentList", "delpay"]),
     ...mapActions({
+      // fetchCategoryList: "addCategory",
       fetchListData: "fetchData",
     }),
     addNewPaymentData(value) {
       this.addDataToPaymentList(value);
     },
-    onParams() {
-      this.show = !this.show;
-      this.$router.push({
-        name: "PageDashboard",
-        query: {
-          categoryF: "Food",
-          categoryT: "Transport",
-          categoryE: "Education",
-          valueF: 200,
-          valueT: 50,
-          valueE: 2000,
-        },
-      });
+    setDeletePayment(value) {
+      this.delpay(value);
     },
     onPage(p) {
       this.page = p;
@@ -82,9 +60,7 @@ export default {
     paymentListLength() {
       return this.$store.getters.getPaymentList.length;
     },
-    categoryList() {
-      return this.$store.getters.getCategoryList;
-    },
+
     curElements() {
       const { count, page } = this;
       return this.paymentList.slice(
@@ -100,7 +76,6 @@ export default {
     this.$store.dispatch("fetchCategoryList");
   },
   mounted() {
-    // console.log(this.$route);
     this.page = Number(this.$route.params.page) || 1;
   },
 };

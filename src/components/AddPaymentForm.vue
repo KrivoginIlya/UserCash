@@ -21,6 +21,11 @@ export default {
     AddPayStok,
   },
   props: ["categoryList"],
+  items: {
+    type: Array,
+    default: () => [],
+  },
+
   data() {
     return {
       date: "",
@@ -31,7 +36,7 @@ export default {
   methods: {
     AddToStokPay(value) {
       this.category = value.category;
-      this.value = value.value;
+      this.value = Number(value.value);
       this.date = this.getCurrentDate();
     },
     getCurrentDate() {
@@ -44,6 +49,7 @@ export default {
     onClick() {
       const { category, value } = this;
       const data = {
+        id: this.$store.state.paymentsList.length + 1,
         date: this.date || this.getCurrentDate(),
         category,
         value,
