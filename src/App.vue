@@ -8,7 +8,8 @@
         >PageDashboard</a
       >
       /
-      <a class="linkApp" href="" @click="goToPage('PageAbout')">PageAbout</a>
+      <a class="linkApp" href="" @click="goToPage('PageAbout')">PageAbout</a> /
+      <router-link class="linkApp" to="/Calc">Calculator</router-link> |
     </div>
     <div class="content">
       <button class="addPay" @click="showPaymentForm" @mouseover="onParams">

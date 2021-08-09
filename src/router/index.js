@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import PageDashboard from "../views/PageDashboard";
 import PageAbout from "../views/PageAbout";
 import Page404 from "../views/Page404";
+import Calc from "../views/Calc";
 
 Vue.use(VueRouter);
 
@@ -11,6 +12,11 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
 
   routes: [
+    {
+      path: "/Calc",
+      name: "Calc",
+      component: Calc,
+    },
     {
       path: "/PageDashboard",
       name: "PageDashboard",
@@ -32,7 +38,7 @@ const router = new VueRouter({
       component: PageAbout,
     },
     {
-      path: "/*",
+      path: "/Page404",
       name: "Page404",
       component: Page404,
     },
