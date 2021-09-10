@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="modal">
     <div class="header">
       {{ settings.header }}
     </div>
@@ -13,8 +13,8 @@
         <Auth v-if="settings.compName === 'auth'" />
       </transition>
     </div>
-    <div class="footer">
-      <button @click="onCloseClick">Close</button>
+    <div class="btnClose">
+      <v-btn color="red" dark @click="onCloseClick">Close</v-btn>
     </div>
   </div>
 </template>
@@ -60,7 +60,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.btnClose {
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
+}
+.modal {
   position: absolute;
   top: 200px;
   left: 200px;

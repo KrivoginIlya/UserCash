@@ -1,8 +1,10 @@
 <template>
   <div>
-    <button @click="value200">Food 200$</button>
-    <button @click="value50">Transport 50$</button>
-    <button @click="value2000">Education 2000$</button>
+    <v-btn class="ma-2" color="primary" @click="value200">Food 200$</v-btn>
+    <v-btn class="ma-2" color="primary" @click="value50">Transport 50$</v-btn>
+    <v-btn class="ma-2" color="primary" @click="value2000"
+      >Education 2000$</v-btn
+    >
   </div>
 </template>
 

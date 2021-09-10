@@ -1,13 +1,29 @@
 <template>
   <div class="payment-form">
-    <input placeholder="Date" type="text" v-model.trim="date" />
-    <select v-model="category">
-      <option v-for="(item, idx) in categoryList" :value="item" :key="idx">
-        {{ item }}
-      </option>
-    </select>
-    <input placeholder="Amout" type="number" v-model.number="value" />
-    <button @click="onClick">Save</button>
+    <div class="inputValue">
+      <v-text-field
+        :rules="rules"
+        placeholder="Date"
+        type="text"
+        v-model.trim="date"
+      />
+      <v-select
+        v-model="category"
+        :items="categoryList"
+        label="Category"
+        data-vv-name="Category"
+        required
+      >
+      </v-select>
+      <v-text-field
+        :rules="rules"
+        placeholder="Amout"
+        type="number"
+        v-model.number="value"
+      />
+      <v-btn color="teal" dark class="ma-2" @click="onClick">Save</v-btn>
+    </div>
+
     <br />
     <AddPayStok @AddNewStokPay="AddToStokPay" />
   </div>
@@ -56,9 +72,15 @@ export default {
       };
       console.log(data);
       this.$emit("addNewPayment", data);
+      this.$store.dispatch("fetchCartValue");
+      this.$store.dispatch("addChartData", data, 0);
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.inputValue {
+  display: flex;
+}
+</style>

@@ -1,9 +1,9 @@
 <template>
   <div class="editString">
-    <input type="date" v-model="date" />
-    <input type="text" placeholder="category" v-model="category" />
-    <input type="number" placeholder="cash" v-model="value" />
-    <button class="savebtn" @click="saveEdit">save</button>
+    <v-text-field v-model="date" placeholder="Date" />
+    <v-text-field type="text" placeholder="Category" v-model="category" />
+    <v-text-field type="number" placeholder="Cash" v-model="value" />
+    <v-btn color="teal" dark class="ma-2" @click="onClick">Save</v-btn>
   </div>
 </template>
 

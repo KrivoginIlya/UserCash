@@ -1,5 +1,31 @@
 <template>
-  <div class="redactor">
+  <v-card
+    color="#6A76AB"
+    dark
+    shrink-on-scroll
+    prominent
+    class="mx-auto posit"
+    max-width="344"
+    outlined
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+        <v-list-item-title class="text-h5 mb-1">
+          Edit String № {{ this.$store.state.editId }}
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <EditItem v-if="showInput" />
+
+    <v-card-actions>
+      <v-btn color="blue" dark class="ma-2" @click="deleteItem"> Delete </v-btn>
+      <v-btn color="teal" dark class="ma-2" @click="showInput = !showInput">
+        Edit
+      </v-btn>
+      <v-btn color="red" dark class="ma-2" @click="close"> Close </v-btn>
+    </v-card-actions>
+  </v-card>
+  <!-- <div class="redactor">
     Edit String № {{ this.$store.state.editId }}
     <button class="btn" @click="deleteItem">del</button>
     <button class="btn" @click="showInput = !showInput">edit</button>
@@ -18,7 +44,7 @@
       </svg>
     </button>
     <EditItem v-if="showInput" />
-  </div>
+  </div> -->
 </template>
 
 <script>

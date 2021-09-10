@@ -1,11 +1,38 @@
 <template>
-  <div class="nav">
-    <div class="page" @click="onClick(cur - 1)">-</div>
-    <div class="page" v-for="i in pageCount" :key="i" @click="onClick(i)">
-      {{ i }}
-    </div>
-    <div class="page" @click="onClick(cur + 1)">+</div>
-  </div>
+  <v-row class="nav">
+    <v-col cols="15">
+      <v-btn
+        class="mx-1"
+        fab
+        depressed
+        x-small
+        color="white"
+        @click="onClick(cur - 1)"
+        ><v-icon dark> mdi-minus </v-icon></v-btn
+      >
+      <v-btn
+        class="mx-1"
+        fab
+        small
+        depressed
+        color="white"
+        v-for="i in pageCount"
+        :key="i"
+        @click="onClick(i)"
+      >
+        {{ i }}
+      </v-btn>
+      <v-btn
+        class="mx-1"
+        fab
+        x-small
+        depressed
+        color="white"
+        @click="onClick(cur + 1)"
+        ><v-icon dark> mdi-plus </v-icon></v-btn
+      >
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -33,19 +60,12 @@ export default {
       this.$emit("changePage", p);
     },
   },
+  created() {},
 };
 </script>
 <style>
 .nav {
   display: flex;
-}
-.page {
-  font-size: 30px;
-  cursor: pointer;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.page:hover {
-  background: gray;
+  align-items: center;
 }
 </style>

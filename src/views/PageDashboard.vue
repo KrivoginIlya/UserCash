@@ -1,26 +1,41 @@
 <template>
-  <div>
-    <div class="wrapper"></div>
+  <v-row>
+    <v-col cols="7">
+      <div class="text-h3 text-md-h2 text-xl-h1 ma-3">My personal Costs</div>
+      <v-btn
+        color="teal"
+        dark
+        depressed
+        @click="showPaymentForm"
+        @mouseover="onParams"
+      >
+        ADD NEW COST <v-icon>mdi-plus</v-icon>
+      </v-btn>
 
-    <br />
+      <PaymentsDisplay :items="curElements" show />
+      <Pagination
+        :length="paymentListLength"
+        @changePage="onPage"
+        :count="count"
+        :cur="page"
+      />
+      <div class="text-h5 ma-4">Total Coast = {{ getFullValue }}</div>
+    </v-col>
 
-    <div>Total Coast = {{ getFullValue }}</div>
-
-    <PaymentsDisplay :items="curElements" />
-    <Pagination
-      :length="paymentListLength"
-      @changePage="onPage"
-      :count="count"
-      :cur="page"
-    />
-  </div>
+    <v-col cols="5">
+      <div>
+        <Chart />
+      </div>
+    </v-col>
+  </v-row>
 </template>
-
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
+
 export default {
   name: "PageDashboard",
   components: {
+    Chart: () => import("../components/ChartLine.vue"),
     Pagination: () => import("../components/Pagination.vue"),
     PaymentsDisplay: () => import("../components/PaymentsDisplay.vue"),
   },
@@ -36,9 +51,25 @@ export default {
   methods: {
     ...mapMutations(["setPaymentsListData", "addDataToPaymentList", "delpay"]),
     ...mapActions({
-      // fetchCategoryList: "addCategory",
       fetchListData: "fetchData",
     }),
+    onParams() {
+      this.$router.push({
+        query: {
+          categoryF: "Food",
+          categoryT: "Transport",
+          categoryE: "Education",
+          valueF: 200,
+          valueT: 50,
+          valueE: 2000,
+        },
+      });
+    },
+
+    showPaymentForm() {
+      this.$modal.show("add", { header: "My New Cost", compName: "add" });
+    },
+
     addNewPaymentData(value) {
       this.addDataToPaymentList(value);
     },
@@ -50,10 +81,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getFullPaymentValue"]),
+    ...mapGetters(["getFullPaymentValue", "getSumSport"]),
+    getSumSportPay() {
+      return this.getSumSport;
+    },
     getFullValue() {
       return this.getFullPaymentValue;
     },
+
     paymentList() {
       return this.$store.getters.getPaymentList;
     },
@@ -75,6 +110,7 @@ export default {
     }
     this.$store.dispatch("fetchCategoryList");
   },
+
   mounted() {
     this.page = Number(this.$route.params.page) || 1;
   },
