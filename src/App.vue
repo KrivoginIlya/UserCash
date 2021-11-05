@@ -31,44 +31,44 @@
 </template>
 
 <script>
-export default {
-  name: "App",
-  data() {
-    return {
-      page: 1,
-      count: 10,
-      pageName: "",
-      modalWindowName: "",
-      settings: {},
-    };
-  },
-  components: {
-    ModalWindow: () => import("./components/ModalWindow.vue"),
-  },
-  methods: {
-    goToPage(page) {
-      this.$router.push({
-        name: page,
-      });
+  export default {
+    name: "App",
+    data() {
+      return {
+        page: 1,
+        count: 10,
+        pageName: "",
+        modalWindowName: "",
+        settings: {},
+      };
     },
-    onShow(settings) {
-      this.modalWindowName = settings.name;
-      this.settings = settings.settings;
+    components: {
+      ModalWindow: () => import("./components/ModalWindow.vue"),
     },
-    onHide() {
-      this.modalWindowName = "";
-      this.settings = {};
+    methods: {
+      goToPage(page) {
+        this.$router.push({
+          name: page,
+        });
+      },
+      onShow(settings) {
+        this.modalWindowName = settings.name;
+        this.settings = settings.settings;
+      },
+      onHide() {
+        this.modalWindowName = "";
+        this.settings = {};
+      },
     },
-  },
-  created() {
-    // if (!this.fetchListData.length) {
-    //   this.fetchListData();
-    // }
-    // this.$store.dispatch("fetchCategoryList");
-  },
-  mounted() {
-    this.$modal.EventBus.$on("show", this.onShow);
-    this.$modal.EventBus.$on("hide", this.onHide);
-  },
-};
+    created() {
+      // if (!this.fetchListData.length) {
+      //   this.fetchListData();
+      // }
+      // this.$store.dispatch("fetchCategoryList");
+    },
+    mounted() {
+      this.$modal.EventBus.$on("show", this.onShow);
+      this.$modal.EventBus.$on("hide", this.onHide);
+    },
+  };
 </script>
